@@ -54,6 +54,16 @@ else
   echo "front ディレクトリが見つかりません。スキップします。"
 fi
 
+# ---------- Claude Code CLI ----------
+if ! command -v claude &> /dev/null; then
+  echo "Claude Code CLI をインストール中..."
+  curl -fsSL https://claude.ai/install.sh | bash
+  # PATHを更新（インストールスクリプトが~/.bashrcに追加する）
+  export PATH="$HOME/.local/bin:$PATH"
+else
+  echo "Claude Code CLI は既にインストールされています。"
+fi
+
 # ---------- Summary ----------
 echo "すべてのセットアップが完了しました！"
-echo "Python / Node / pnpm / uv / fnm が自動構築されました。"
+echo "Python / Node / pnpm / uv / fnm / Claude Code CLI が自動構築されました。"

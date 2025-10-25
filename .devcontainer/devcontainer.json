@@ -16,12 +16,13 @@
         "rickaym.manim-sideview",
         "mhutchie.git-graph",
         "github.copilot",
-        "github.copilot-chat"
+        "github.copilot-chat",
+        "anthropic.claude-code"
       ]
     }
   },
   "forwardPorts": [3001, 8080, 5433],
   "remoteUser": "root",
-  "postCreateCommand": ".devcontainer/setup.sh"
+  "postCreateCommand": ".devcontainer/setupo.sh"
 
 }

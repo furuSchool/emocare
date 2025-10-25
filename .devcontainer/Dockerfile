@@ -50,7 +50,7 @@ RUN curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir "/usr/l
     echo 'eval "$(fnm env)"' >> /etc/profile.d/fnm.sh
 
 # 作業ディレクトリ（compose の volume と一致させる）
-WORKDIR /workspaces/ai_agent
+WORKDIR /workspaces/emocare
 
 # ログインシェルにして /etc/profile.d を確実に読む
 SHELL ["/bin/bash", "-l", "-c"]
