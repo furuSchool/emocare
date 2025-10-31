@@ -1,0 +1,10 @@
+"""
+WebSocket URL routing for conversations app.
+"""
+
+from django.urls import path
+from . import consumers
+
+websocket_urlpatterns = [
+    path('ws/conversation/', consumers.ConversationConsumer.as_asgi()),
+]

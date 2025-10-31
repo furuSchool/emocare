@@ -98,9 +98,117 @@ backエンドでインタプリンタとシンタックスハイライトが動�
 
 
 ```bash
-uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+uv run daphne -b 0.0.0.0 -p 8000 config.asgi:application
 ```
 
+### データベース（PostgreSQL）の起動と初期化
+
+#### データベースサーバーの起動
+
+```bash
+sudo service postgresql start
+```
+
+#### データベースの初期化とマイグレーション
+
+初回のみ、データベースを作成してマイグレーションを実行します：
+
+```bash
+cd backend
+source .venv/bin/activate
+
+# マイグレーションを実行
+python manage.py migrate
+```
+
+#### サンプルデータの投入（Seedデータ）
+
+データベースにサンプルデータを投入します：
+
+```bash
+cd backend
+source .venv/bin/activate
+
+# Seedデータを投入
+python manage.py seed
+```
+
+このコマンドで以下のデータが投入されます：
+- 感情データ（プルチックの52感情）: 49件
+- 患者データ（サンプル患者）: 5人
+- 会話セッションデータ（サンプル会話）: 8件
+
+**注意**: 患者IDは数値型（AutoField）のため、数値の昇順に格納される。フロントエンドにて、id=2の患者の会話記録が見たい場合は以下のように、URLを指定する。
+
+```
+http://localhost:3000/doctors/patients/2/emotions?order=asc&limit=25
+```
+
+#### 起動しているPostgreSQLから登録されている会話記録がある患者のIDをCLIから確認する方法
+
+##### 方法1: psqlコマンドで直接確認（推奨・最も簡単）
+
+```bash
+# 全患者を表示
+sudo -u postgres psql -d devdb -c "SELECT id, name, email FROM patients;"
+
+# 会話記録がある患者とセッション数を表示
+sudo -u postgres psql -d devdb -c "
+SELECT
+  p.id as patient_id,
+  p.name as patient_name,
+  p.email,
+  COUNT(cs.id) as session_count,
+  MIN(cs.started_at) as first_session,
+  MAX(cs.started_at) as last_session
+FROM patients p
+LEFT JOIN conversation_sessions cs ON p.id = cs.patient_id
+GROUP BY p.id, p.name, p.email
+HAVING COUNT(cs.id) > 0
+ORDER BY session_count DESC;
+"
+```
+
+##### 方法2: Djangoシェルを使う
+
+```bash
+cd backend
+source .venv/bin/activate
+python manage.py shell
+```
+
+シェル内で以下を実行：
+
+```python
+from apps.patients.models import Patient
+from apps.conversations.models import ConversationSession
+
+# 全患者を表示
+for patient in Patient.objects.all():
+    print(f"ID: {patient.id}, 名前: {patient.name}, メール: {patient.email}")
+
+# 会話記録がある患者を表示
+from django.db.models import Count
+patients_with_sessions = Patient.objects.annotate(
+    session_count=Count('conversationsession')
+).filter(session_count__gt=0)
+
+for patient in patients_with_sessions:
+    print(f"ID: {patient.id}, 名前: {patient.name}, セッション数: {patient.session_count}")
+```
+
+##### 方法3: PostgreSQL CLIに対話的に接続
+
+```bash
+# PostgreSQLに接続
+sudo -u postgres psql -d devdb
+
+# SQLコマンドを実行
+SELECT id, name, email FROM patients;
+
+# 終了
+\q
+```
 
 # デプロイ
 

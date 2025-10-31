@@ -1,103 +1,79 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Mic, Bot, BrainCircuit } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-white p-6 md:p-12">
+      <main className="flex flex-col items-center w-full max-w-4xl gap-12">
+        <header className="text-center">
+          <h1 className="font-heading text-6xl md:text-7xl font-bold text-gray-800">
+            EmoCare
+          </h1>
+          <p className="text-lg text-gray-600 mt-2">
+            AI感情可視化・共感ケア支援システム
+          </p>
+        </header>
+        <section className="bg-white shadow-xl rounded-3xl p-8 md:p-12 w-full max-w-lg text-center">
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">ようこそ</h2>
+          <p className="text-gray-600 leading-relaxed mb-8">
+            患者の感情を可視化し、適切なケアを提供するためのシステムです。
+            <br />
+            音声で会話し、AIが共感的に応答します。
+          </p>
+          <div className="flex flex-col gap-4">
+            <Link
+              href="/login"
+              className="bg-primary text-white font-bold py-4 px-6 rounded-full text-lg
+                         transition-transform transform hover:scale-105 hover:bg-red-500 shadow-lg"
+            >
+              ログイン / 新規登録
+            </Link>
+            <Link
+              href="#"
+              className="bg-gray-100 text-gray-700 font-bold py-4 px-6 rounded-full text-lg
+                         transition-transform transform hover:scale-105 hover:bg-gray-200"
+            >
+              会話テストページ
+            </Link>
+          </div>
+        </section>
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full mt-8">
+          <FeatureCard
+            icon={<Mic size={40} className="text-primary" />}
+            title="音声会話"
+            description="音声で自然に話しかけることができます"
+          />
+          <FeatureCard
+            icon={<Bot size={40} className="text-primary" />}
+            title="AI応答"
+            description="共感的で非批判的な応答を生成します"
+          />
+          <FeatureCard
+            icon={<BrainCircuit size={40} className="text-primary" />}
+            title="感情分析"
+            description="52種類の感情から適切な感情を判定します"
+          />
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    </div>
+  );
+}
+
+function FeatureCard({
+  icon,
+  title,
+  description,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="bg-white shadow-lg rounded-2xl p-8 flex flex-col items-center text-center transition-transform transform hover:-translate-y-2">
+      <div className="mb-4">{icon}</div>
+      <h3 className="text-xl font-bold text-gray-800 mb-2">{title}</h3>
+      <p className="text-gray-600">{description}</p>
     </div>
   );
 }
