@@ -1,6 +1,6 @@
 # ECAI Backend - Django REST Framework API
 
-Empathic Care AI（ECAI）のバックエンドAPI。
+EmoCareのバックエンドAPI。
 
 ## 技術スタック
 
