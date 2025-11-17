@@ -24,6 +24,23 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.codespaces.app',
 ]
 
+# REST Framework Settings for Development - Allow unauthenticated access
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'apps.core.authentication.PatientTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',  # Allow all access in development
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+}
+
 # Development-specific apps
 # INSTALLED_APPS += [
 #     'django_extensions',  # Optional: Add if you want extra management commands

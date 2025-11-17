@@ -22,6 +22,12 @@ class PatientViewSet(viewsets.ModelViewSet):
     queryset = Patient.objects.all()
 
     def get_permissions(self):
+        # Development: Allow all access in DEBUG mode
+        from django.conf import settings
+        if settings.DEBUG:
+            return [AllowAny()]
+
+        # Production: Restrict access
         if self.action in ['register', 'login']:
             return [AllowAny()]
         return [IsAuthenticated()]

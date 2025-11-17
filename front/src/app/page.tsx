@@ -30,7 +30,7 @@ export default function Home() {
               ログイン / 新規登録
             </Link>
             <Link
-              href="#"
+              href="/test-conversation"
               className="bg-gray-100 text-gray-700 font-bold py-4 px-6 rounded-full text-lg
                          transition-transform transform hover:scale-105 hover:bg-gray-200"
             >

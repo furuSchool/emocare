@@ -217,8 +217,20 @@ export default function TestConversationPage() {
     }
 
     try {
+      // Unlock audio autoplay by playing a silent audio on user interaction
+      if (audioRef.current) {
+        audioRef.current.muted = true;
+        audioRef.current.play().then(() => {
+          audioRef.current!.pause();
+          audioRef.current!.muted = false;
+          addLog('音声自動再生をアンロックしました');
+        }).catch((err) => {
+          addLog(`音声アンロック失敗（自動再生できない可能性があります）: ${err.message}`);
+        });
+      }
+
       addLog('セッション開始リクエスト送信中...');
-      
+
       // Clear previous results
       clearAll();
 
@@ -480,11 +492,16 @@ export default function TestConversationPage() {
             {aiResponse ? (
               <div className="bg-primary/10 p-4 rounded-2xl border border-primary/20">
                 <p className="text-gray-900 leading-relaxed">{aiResponse}</p>
-                <audio ref={audioRef} controls className="w-full mt-3" />
               </div>
             ) : (
               <p className="text-gray-500 text-sm">セッション終了後にここに表示されます</p>
             )}
+            {/* Audio element is always rendered for autoplay to work */}
+            <audio
+              ref={audioRef}
+              controls
+              className={`w-full mt-3 ${aiResponse ? '' : 'hidden'}`}
+            />
           </div>
 
           <hr className="my-6 border-gray-100" />
