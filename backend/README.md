@@ -56,6 +56,7 @@ python manage.py makemigrations
 
 DB_HOST=db DB_NAME=devdb DB_USER=postgres DB_PASSWORD=postgres \
 python manage.py migrate
+python manage.py seed
 ```
 
 または、環境変数を一度エクスポートしてから実行：
@@ -69,6 +70,7 @@ export DB_PASSWORD=postgres
 
 python manage.py makemigrations
 python manage.py migrate
+python manage.py seed
 ```
 
 ### 5. スーパーユーザーの作成
